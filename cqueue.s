@@ -9,14 +9,14 @@
 		MOV R3, #0x40000000		;Queue start Adddress in Memory : rear
 		MOV R4, #0x40000000		;Queue front
 		
-loop	SUB R7,R3,R4 			;rear - front
+loop		SUB R7,R3,R4 			;rear - front
 		CMP R7,#40				;
 		BL  enqueue				;call enqueue
 		BLT loop				;continue if (rear - front) < size
 		
 		BL dequeue				; dequeue
 
-stop 	B stop
+stop 		B stop
 
 enqueue
 		ADD R5, #2
