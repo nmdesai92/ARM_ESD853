@@ -1,3 +1,4 @@
+;Check the number in R0 is even/odd
 
 		AREA     appcode, CODE, READONLY
 		EXPORT __main
