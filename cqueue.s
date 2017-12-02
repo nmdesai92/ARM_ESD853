@@ -1,17 +1,23 @@
 ;Circular Queue in Assembly
-;This will Enqueue to fill whole queue, then dequeue 2 elements and then enqueue 2 elements
-		
+;This will Enqueue to fill whole queue, 
+;then dequeue 2 elements and then enqueue 
+;then dequeue and then enqueue
+		PRESERVE8
+		THUMB
 		AREA Arm_ASM,CODE,READONLY
 		ENTRY
 		EXPORT __main
+			
+			
 SIZE EQU 40				;40 BYTES
 START EQU 0				; start = front = rear
-	
+ADDR  EQU 0x20000000	;Address of queue	
+
 __main FUNCTION
 		MOV R0,#SIZE				;Queue Size
 		MOV R1, #START			; Queue rear
 			
-		MOV R3, #0x40000000		;Queue start Adddress in Memory
+		MOV R3, #ADDR	;Queue start Adddress in Memory
 		MOV R4, #START		;Queue front
 
 
@@ -22,6 +28,8 @@ loop	CMP R0,#0			;check queue legth
 		BL dequeue				; dequeue
 		BL dequeue				;dequeue
 		BL enqueue				;enqueue
+		BL enqueue
+		BL dequeue
 		BL enqueue
 		
 stop 	B stop
@@ -39,13 +47,15 @@ enqueue
 dequeue
 		CMP R0,#SIZE		;if queue is empty
 		BXEQ LR 				;cannot dequeue
-		LDR R6, [R4]		;take from memory
+		LDR R6, [R3,R4]		;take from memory
 		ADD R4, #0x04		;increment front
-		CMP R0,#0			
-		MOVEQ R1,#START	;If queue is full, start from start
-			
 		ADD R0,#4			;Increment queue size
+		CMP R1,#SIZE		;if rear == size, 	
+		MOVEQ R1,#START		;==>queue is full, start from start
+		
+			
 		
 		BX  LR
 		ENDFUNC
 		END
+			
