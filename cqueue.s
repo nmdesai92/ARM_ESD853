@@ -39,7 +39,7 @@ enqueue
 dequeue
 		CMP R0,#SIZE		;if queue is empty
 		BXEQ LR 				;cannot dequeue
-		LDR R6, [R3,R4]		;take from memory
+		LDR R6, [R4]		;take from memory
 		ADD R4, #0x04		;increment front
 		CMP R0,#0			
 		MOVEQ R1,#START	;If queue is full, start from start
