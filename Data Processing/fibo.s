@@ -3,7 +3,7 @@
 		AREA Arm_ASM,CODE,READONLY
 		ENTRY
 		
-		MOV R3, #0x40000000
+		MOV R3, #0x20000000
 		
 		MOV R0,#5		;upto nth term, R0 = n = 5
 		MOV R1,#0		; 0
