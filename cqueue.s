@@ -21,8 +21,9 @@ __main FUNCTION
 		MOV R4, #START		;Queue front
 
 
-loop	CMP R0,#0			;check queue legth
+loop			;check queue legth
 		BLGT  enqueue				;call enqueue
+		CMP R0,#0
 		BGT loop				;continue if queue is not empty
 		
 		BL dequeue				; dequeue
@@ -41,7 +42,9 @@ enqueue
 		STR R5,[R3,R1]		;Store in Memory
 		;ADD R3, #0X04		;Increment memory
 		ADD R1,#4		;increment rear
-		SUBGT R0,R0,#4		;decrement queue size
+		CMP R1,#SIZE
+		MOVEQ R1,#START
+		SUB R0,R0,#4		;decrement queue size
 		BX	LR		
 		
 dequeue
@@ -50,8 +53,8 @@ dequeue
 		LDR R6, [R3,R4]		;take from memory
 		ADD R4, #0x04		;increment front
 		ADD R0,#4			;Increment queue size
-		CMP R1,#SIZE		;if rear == size, 	
-		MOVEQ R1,#START		;==>queue is full, start from start
+		CMP R4,#SIZE		;if rear == size, 	
+		MOVEQ R4,#START		;==>queue is full, start from start
 		
 			
 		
